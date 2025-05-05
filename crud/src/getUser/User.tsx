@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import {
+  Table, TableBody, TableCell, TableContainer,
+  TableHead, TableRow, Paper, Button, Box, Typography, Stack
+} from '@mui/material';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
@@ -25,7 +22,7 @@ const User = () => {
     fetchUsers();
   }, []);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: string) => {
     try {
       await axios.delete(`http://localhost:4004/api/product/${id}`);
       setUsers(users.filter(user => user._id !== id));
@@ -35,47 +32,65 @@ const User = () => {
       alert("Failed to delete user.");
     }
   };
-  
-
 
   return (
-    <div className='main'>
-    <div className='userTable'>
-      <div className='addUser'>
-        <button>
-           <Link to="/add">Add User</Link>
-        </button>
-      </div>
+    <Box p={4}>
+      <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+        <Typography variant="h4">User List</Typography>
+        <Button
+          component={Link}
+          to="/add"
+          variant="contained"
+          color="primary"
+        >
+          Add User
+        </Button>
+      </Box>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ minWidth: 650 }} aria-label="user table">
           <TableHead>
             <TableRow>
               <TableCell>#</TableCell>
-              <TableCell align="right">Name</TableCell>
-              <TableCell align="right">Email</TableCell>
-              <TableCell align="right">Number</TableCell>
-              <TableCell align="right">Address</TableCell>
+              <TableCell align="center">Name</TableCell>
+              <TableCell align="center">Email</TableCell>
+              <TableCell align="center">Number</TableCell>
+              <TableCell align="center">Address</TableCell>
+              <TableCell align="center">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {users.map((user, index) => (
-              <TableRow key={index}>
+              <TableRow key={user._id}>
                 <TableCell>{index + 1}</TableCell>
-                <TableCell align="right">{user.name}</TableCell>
-                <TableCell align="right">{user.email}</TableCell>
-                <TableCell align="right">{user.number}</TableCell>
-                <TableCell align="right">{user.address}</TableCell>
-                <TableCell>
-                <Link to={`/update/${user._id}`}>Update</Link>
-                <button onClick={()=> handleDelete(user._id)}>Delete</button>
+                <TableCell align="center">{user.name}</TableCell>
+                <TableCell align="center">{user.email}</TableCell>
+                <TableCell align="center">{user.number}</TableCell>
+                <TableCell align="center">{user.address}</TableCell>
+                <TableCell align="center">
+                  <Stack direction="row" spacing={1} justifyContent="center">
+                    <Button
+                      component={Link}
+                      to={`/update/${user._id}`}
+                      variant="outlined"
+                      color="primary"
+                    >
+                      Update
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      onClick={() => handleDelete(user._id)}
+                    >
+                      Delete
+                    </Button>
+                  </Stack>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-    </div>
-    </div>
+    </Box>
   );
 };
 
