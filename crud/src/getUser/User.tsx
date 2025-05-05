@@ -8,9 +8,10 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import {FormDataType} from './type'
 
 const User = () => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<FormDataType[]>([]);
 
   useEffect(() => {
     const fetchUsers = async () => {

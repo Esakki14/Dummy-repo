@@ -15,7 +15,7 @@ mongoose.connect('mongodb://localhost:27017/userData')
     console.error("❌ MongoDB connection failed:", error.message);
 });
 
-
+//get
 app.get('/api/products', async(req,res)=>{
     try{
         const product = await Product.find({})
@@ -24,7 +24,7 @@ app.get('/api/products', async(req,res)=>{
         res.status(500).json({ message: error.message });
     }
 })
-
+//get id
 app.get('/api/product/:id', async (req, res) => {
     try {
       const { id } = req.params;
@@ -40,7 +40,7 @@ app.get('/api/product/:id', async (req, res) => {
     }
 });
   
-
+//add it
 app.post('/api/products', async (req, res) => {
     try {
       console.log(req.body)
@@ -53,6 +53,7 @@ app.post('/api/products', async (req, res) => {
     }
 });
 
+//update
 app.put('/api/product/:id', async (req, res) => {
     try {
       const { id } = req.params;
@@ -68,6 +69,7 @@ app.put('/api/product/:id', async (req, res) => {
     }
 });
 
+//delete
 app.delete('/api/product/:id', async (req, res) => {
     try {
       const { id } = req.params;
