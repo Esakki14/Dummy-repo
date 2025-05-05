@@ -6,7 +6,7 @@ import {FormDataType} from './type'
 const Update = () => {
   const { id } = useParams();
   const navigate = useNavigate(); 
-  const [data, setData] = useState<FormDataType>({}); 
+  const [data, setData] = useState<FormDataType>({name:'',email:'',number:'',address:''}); 
 
   useEffect(() => {
     const fetchUsers = async () => {
