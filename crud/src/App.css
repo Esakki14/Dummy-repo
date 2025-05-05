@@ -6,3 +6,6 @@
 .userTable{
   width: 60%;
 }
+.crudAction button{
+ margin: 0 10px;
+}

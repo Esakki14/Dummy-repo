@@ -1,7 +1,14 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import {FormDataType} from './type';
+import { FormDataType } from './type';
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Container
+} from '@mui/material';
 
 const Add = () => {
   const [formData, setFormData] = useState<FormDataType>({
@@ -17,14 +24,14 @@ const Add = () => {
     console.log("Add component mounted");
   }, []);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ 
       ...formData, 
       [e.target.name]: e.target.value 
     });
   };
 
-  const submit = async (e) => {
+  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:4004/api/products', formData);
@@ -39,56 +46,64 @@ const Add = () => {
   };
 
   return (
-    <div>
-      <div>
-        <Link to="/">User Data</Link>
-      </div>
-      <form onSubmit={submit}>
-        <div>
-          <input
-            type="text"
+    <Container maxWidth="sm">
+      <Box mt={4}>
+        <Typography variant="h4" gutterBottom>
+          Add User
+        </Typography>
+        <Button component={Link} to="/" variant="outlined" sx={{ mb: 2 }}>
+          View User Data
+        </Button>
+        <form onSubmit={submit}>
+          <TextField
+            fullWidth
+            margin="normal"
+            label="Name"
             name="name"
-            placeholder="Name"
             value={formData.name}
             onChange={handleChange}
             required
           />
-        </div>
-        <div>
-          <input
-            type="email"
+          <TextField
+            fullWidth
+            margin="normal"
+            label="Email"
             name="email"
-            placeholder="Email"
+            type="email"
             value={formData.email}
             onChange={handleChange}
             required
           />
-        </div>
-        <div>
-          <input
-            type="number"
+          <TextField
+            fullWidth
+            margin="normal"
+            label="Number"
             name="number"
-            placeholder="Number"
+            type="number"
             value={formData.number}
             onChange={handleChange}
             required
           />
-        </div>
-        <div>
-          <input
-            type="text"
+          <TextField
+            fullWidth
+            margin="normal"
+            label="Address"
             name="address"
-            placeholder="Address"
             value={formData.address}
             onChange={handleChange}
             required
           />
-        </div>
-        <div>
-          <input type="submit" value="Submit" />
-        </div>
-      </form>
-    </div>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            sx={{ mt: 2 }}
+          >
+            Submit
+          </Button>
+        </form>
+      </Box>
+    </Container>
   );
 };
 
